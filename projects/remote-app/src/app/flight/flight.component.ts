@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SharedLibService } from 'shared-lib';
 
 @Component({
   selector: 'app-flight',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class FlightComponent {
 
+  constructor(public service: SharedLibService) {
+  }
 }

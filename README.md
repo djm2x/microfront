@@ -31,7 +31,9 @@ https://angular.io/guide/file-structure
 
 https://github.com/angular-architects/module-federation-plugin/blob/main/libs/mf/tutorial/tutorial.md
 
-ng add @angular-architects/module-federation --project shell --type host --port 4200
+ng add @angular-architects/module-federation --project shell --type dynamic-host --port 4200
 
 ng add @angular-architects/module-federation --project remote-app --type remote --port 4201
+
+ng g lib shared-lib
 
