@@ -8,16 +8,8 @@ const routes: Routes = [
   //   loadChildren: () => import('remoteApp/Module')
   //     .then(m => m.FlightModule)
   // },
-  {
-    path: 'flight',
-    loadChildren: () =>
-      loadRemoteModule({
-        type: 'manifest',
-        remoteName: 'remoteApp',
-        exposedModule: './Module'
-      })
-        .then(m => m.FlightModule)
-  },
+  { path: 'flight', loadChildren: () => loadRemoteModule({type: 'manifest',remoteName: 'remoteApp',exposedModule: './Module' }).then(m => m.FlightModule) },
+  { path: 'product', loadChildren: () => loadRemoteModule({type: 'manifest',remoteName: 'product',exposedModule: './Module' }).then(m => m.AppModule) },
 
   // {
   //   path: '**',

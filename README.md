@@ -29,11 +29,15 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 https://angular.io/guide/file-structure
 
+ng generate application product
+
 https://github.com/angular-architects/module-federation-plugin/blob/main/libs/mf/tutorial/tutorial.md
 
 ng add @angular-architects/module-federation --project shell --type dynamic-host --port 4200
 
 ng add @angular-architects/module-federation --project remote-app --type remote --port 4201
+
+ng add @angular-architects/module-federation --project product --type remote --port 4202
 
 ng g lib shared-lib
 
