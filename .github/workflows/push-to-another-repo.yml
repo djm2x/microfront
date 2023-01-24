@@ -1,0 +1,23 @@
+name: trigger jenkins job
+
+on:
+  push:
+    branches: [main]
+
+env:
+  TOKEN: 'IqI6yIgYXweCMtefMRDu'
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: https://djm2x@bitbucket.org/mohamed-mourabit/microfront.git
+          ref: 'dev'
+          token: ${{env.APP_NAME}}
+      - name: setup git config
+        run: |
+          git config user.name "mohamed-mourabit"
+          git config user.email "dj6m2x@gmail.com"
+      # - <make changes and commit >
+      - run: git push origin dev
