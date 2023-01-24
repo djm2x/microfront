@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: https://djm2x@bitbucket.org/mohamed-mourabit/microfront.git
+          repository: djm2x@bitbucket.org/mohamed-mourabit/microfront.git
           ref: 'dev'
           token: ${{env.APP_NAME}}
       - name: setup git config
