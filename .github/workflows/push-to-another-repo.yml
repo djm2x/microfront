@@ -7,12 +7,27 @@ on:
 env:
   TOKEN: 'IqI6yIgYXweCMtefMRDu'
 jobs:
+  # push-v2:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Pushes to another repository
+  #       uses: cpina/github-action-push-to-another-repository@main
+  #       env:
+  #         # SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+  #         API_TOKEN_GITHUB: ${{env.TOKEN}}
+  #       with:
+  #         source-directory: ./
+  #         destination-github-username: mohamed-mourabit
+  #         destination-repository-name: microfront
+  #         user-email: mohamed-mourabit
+  #         target-branch: main
+
   push:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          github-server-url: 'https://bitbucket.org'
+          github-server-url: 'https://djm2x@bitbucket.org'
           repository: mohamed-mourabit/microfront
           ref: 'dev'
           token: ${{env.TOKEN}}
@@ -23,17 +38,3 @@ jobs:
       # - <make changes and commit >
       - run: git push origin dev
 
-  # push-v2:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Pushes to another repository
-  #       uses: cpina/github-action-push-to-another-repository@main
-  #       env:
-  #         SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-  #         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-  #       with:
-  #         source-directory: 'output'
-  #         destination-github-username: 'cpina'
-  #         destination-repository-name: 'pandoc-test-output'
-  #         user-email: carles3@pina.cat
-  #         target-branch: main
