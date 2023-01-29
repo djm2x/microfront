@@ -30,8 +30,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 npm i @angular-architects/module-federation
 https://angular.io/guide/file-structure
 
-ng generate application product
+ng generate application product --routing --style=scss
 ng generate application home
+ng g lib shared-lib
 
 https://github.com/angular-architects/module-federation-plugin/blob/main/libs/mf/tutorial/tutorial.md
 
@@ -43,5 +44,7 @@ ng add @angular-architects/module-federation --project product --type remote --p
 
 ng add @angular-architects/module-federation --project home --type remote --port 4203
 
-ng g lib shared-lib
 
+deploy only if changed in angular monorepo
+
+https://stackoverflow.com/questions/54654159/npm-publish-only-if-changed-in-angular-monorepo
