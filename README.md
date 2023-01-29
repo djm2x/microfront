@@ -27,9 +27,11 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 
+npm i @angular-architects/module-federation
 https://angular.io/guide/file-structure
 
 ng generate application product
+ng generate application home
 
 https://github.com/angular-architects/module-federation-plugin/blob/main/libs/mf/tutorial/tutorial.md
 
@@ -38,6 +40,8 @@ ng add @angular-architects/module-federation --project shell --type dynamic-host
 ng add @angular-architects/module-federation --project remote-app --type remote --port 4201
 
 ng add @angular-architects/module-federation --project product --type remote --port 4202
+
+ng add @angular-architects/module-federation --project home --type remote --port 4203
 
 ng g lib shared-lib
 

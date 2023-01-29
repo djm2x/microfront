@@ -1,4 +1,5 @@
 {
     "remoteApp": "http://localhost:4201/remoteEntry.js",
+    "home": "http://localhost:4203/remoteEntry.js",
     "product": "http://localhost:4202/remoteEntry.js"
 }

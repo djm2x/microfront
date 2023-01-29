@@ -1,6 +1,8 @@
 <h1>sell</h1>
 
-<div *ngFor="let e of ['/home', '/flight']">
+<div #placeHolder></div>
+
+<div *ngFor="let e of ['/home', '/flight', '/product']">
   <a [routerLink]="[e]" routerLinkActive="router-link-active" >
     {{e}}
   </a>
