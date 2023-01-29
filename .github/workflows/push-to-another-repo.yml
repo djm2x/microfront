@@ -1,4 +1,4 @@
-name: trigger jenkins job
+name: push-to-another-repo
 
 on:
   push:
