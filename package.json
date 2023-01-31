@@ -8,6 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js",
+    "b0": "groovy main.groovy",
+    "b": "bash docker-run.sh",
     "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
   },
   "private": true,
