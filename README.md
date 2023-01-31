@@ -48,3 +48,7 @@ ng add @angular-architects/module-federation --project home --type remote --port
 deploy only if changed in angular monorepo
 
 https://stackoverflow.com/questions/54654159/npm-publish-only-if-changed-in-angular-monorepo
+
+#
+https://engineering.brigad.co/only-deploy-services-impacted-by-changes-in-a-mono-repository-18f54b8ac109
+monorepo deploy changes with git diff
