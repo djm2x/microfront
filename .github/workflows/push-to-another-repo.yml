@@ -2,7 +2,7 @@ name: push-to-another-repo
 
 on:
   push:
-    branches: [main]
+    branches: [main-]
 
 env:
   TOKEN: 'IqI6yIgYXweCMtefMRDu'
