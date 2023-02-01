@@ -53,9 +53,13 @@ dockerRunFunction2(){
 # find the last tagged commit and assume it was the last release
 # cd projects && git diff --name-only $COMMIT_ID | awk -F'/' 'NF!=1{print $2}' | sort -u
 
-# git diff --name-only HEAD $COMMIT $PATH_TO_LIB
+git diff --name-only HEAD $COMMIT |grep shell
 
-echo $COMMIT
+# git diff --raw HEAD^1
+
+# git diff HEAD^1 --name-only|grep shell
+
+# echo $COMMIT
 # dockerRunFunction 'library-com-front2' 'library';
 # dockerRunFunction2 'library-com-api' 'library';
 # dockerRunFunction2 'mongo' 'db' 'mongo';
