@@ -10,6 +10,7 @@
     "all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js",
     "b0": "groovy main.groovy",
     "b": "bash docker-run.sh",
+    "g": "groovy main.groovy",
     "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
   },
   "private": true,

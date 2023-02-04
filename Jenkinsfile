@@ -42,7 +42,7 @@ node {
       ${APP_NAME}"""
 
       sh "docker rm --force sa-cms-dev-api"
-      
+
       sh """docker run -d \
       --restart unless-stopped \
       -p 6001:5001 \
