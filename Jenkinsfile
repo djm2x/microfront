@@ -17,14 +17,19 @@ node {
       // sh "echo ${commit.GIT_COMMIT}"
 
       apps.each { e ->
-        def changes = sh(script:"git diff @~ @ --name-only | grep $e.name", returnStdout: true)
+         try {
+          def changes = sh(script:"git diff @~ @ --name-only | grep $e.name", returnStdout: true)
 
-        if(changes == '' || changes == null) {
-          sh """echo '$e.name no changes, no build'"""
-          return;
+          if(changes == '' || changes == null) {
+            sh """echo '$e.name no changes, no build'"""
+            return;
+          }
+
+          sh """echo '$e.name has some changes, building...'"""
+
+        } catch (err) {
+          println(err)
         }
-
-        sh """echo '$e.name has some changes, building...'"""
 
         // println(commit)
         //  test git diff
