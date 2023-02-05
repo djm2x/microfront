@@ -18,7 +18,7 @@ node {
 
       apps.each { e ->
          try {
-          def changes = sh(script:"git diff @~ @ --name-only | grep ${e.name}", returnStdout: true)
+          def changes = sh(script:"""git diff  --name-only @~ @ | grep ${e.name}""", returnStdout: true)
 
           if(changes == '' || changes == null) {
             println("${e.name} no changes, no build")
