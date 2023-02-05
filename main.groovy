@@ -32,15 +32,17 @@ def main() {
 
   def commit = sh("git rev-parse HEAD")
   // def changes = sh("git diff HEAD@{1} $commit --name-only | grep .")
+    def changes = sh("git diff HEAD@{1} $(git rev-parse HEAD) --name-only")
   apps.each { e ->
-    def changes = sh("git diff HEAD@{1} $commit --name-only | grep $e.name")
 
-    if(changes == '' || changes == null) {
-      sh("echo '$e.name no changes, no build' ");
-      return;
-    }
+    println(changes);
 
-    sh("echo '$e.name has some changes, building...' ");
+    // if(changes == '' || changes == null) {
+    //   println("echo '$e.name no changes, no build' ");
+    //   return;
+    // }
+
+    // println("echo '$e.name has some changes, building...' ");
 
     // println(commit)
     // println(changes)

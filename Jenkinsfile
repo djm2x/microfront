@@ -14,11 +14,12 @@ node {
     stage('Cloning Git') {
       def commit = checkout scm
       //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
-      // sh "echo ${commit}"
+      sh "echo ${commit}"
     }
 
     stage('Get project changed') {
-      def lastCommit = sh("git rev-parse HEAD")
+      def lastCommit = sh "git rev-parse HEAD"
+      sh "echo ${lastCommit}"
 
       apps.each { e ->
         def changes = sh("git diff HEAD@{1} $lastCommit --name-only | grep $e.name")

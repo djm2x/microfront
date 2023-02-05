@@ -3,13 +3,11 @@ name: trigger jenkins job
 # or add https://jenkins.com/github-webhook
 on:
   push:
-    branches: [dev]
+    branches: [main]
 
 env:
-  JOB_NAME: 'studassist-api'
-  # JOB_NAME: 'test_api_remote_deploy'
-  TOKEN: '111e6645d7b0f82a3e35e2ee371c687cb4'
-  # TOKEN: '11fc272886bb8598b94aeae36b802a2de3'
+  JOB_NAME: 'monorepo-test'
+  TOKEN: '114fc0d1d864b6fee4a850875f801152d1'
 jobs:
   build:
     name: Build
