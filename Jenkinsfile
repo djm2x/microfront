@@ -19,6 +19,8 @@ node {
       def lastCommit = sh(script: "git rev-parse HEAD", returnStdout: true)
       sh "echo ${lastCommit}"
 
+      sh "git --version"
+
       def changes0 = sh("git diff HEAD@{1} ${lastCommit} --name-only|grep .")
       sh "echo ${changes0}"
 
