@@ -15,23 +15,41 @@
 
 //     }
 // }
-def apps = [
-    [APP_NAME: "BMW", DOMAINE: "750i", DOMAINE_PREFIX: 300000, SUB_DOMAINE: '', APP_PORT: '5000', EXPOSED_PORT: '5020'],
-]
 
-// apps.each { e -> println "$e $e.type -> $e.price" }
 
 // for (e in apps) {
 //     println "$car.brand $car.type -> $car.price"
 // }
 
-def folder = 'remote-app'
+def main() {
 
-def commit = sh('git rev-parse HEAD')
-def changes = sh('git diff HEAD@{2} $COMMIT --name-only|grep .')
+  def apps = [
+    [name: "home", port: '4200', exposed_port: '6000', path: 'home', domaine: "194.163.148.222", domaine_prefix: ''],
+    [name: "product", port: '4200', exposed_port: '6001', path: 'product', domaine: "194.163.148.222", domaine_prefix: ''],
+    [name: "remote-app", port: '4200', exposed_port: '6002', path: 'remote-app', domaine: "194.163.148.222", domaine_prefix: ''],
+    [name: "shell", port: '4200', exposed_port: '6003', path: 'shell', domaine: "194.163.148.222", domaine_prefix: ''],
+  ];
+
+  def commit = sh("git rev-parse HEAD")
+  // def changes = sh("git diff HEAD@{1} $commit --name-only | grep .")
+  apps.each { e ->
+    def changes = sh("git diff HEAD@{1} $commit --name-only | grep $e.name")
+
+    if(changes == '' || changes == null) {
+      sh("echo '$e.name no changes, no build' ");
+      return;
+    }
+
+    sh("echo '$e.name has some changes, building...' ");
+
+    // println(commit)
+    // println(changes)
+  }
 
 
-println(r);
+}
+
+main();
 
 // def script = "./docker-run.bat"
 // def pb = new ProcessBuilder(script).inheritIO()
@@ -45,14 +63,17 @@ println(r);
 // p.waitFor()
 
 def sh(e) {
-    def proc = e.execute()
+  try {
+    Process proc = e.execute()
 
-    // sh(script: """ echo me """, returnStdout: true)
-    def b = new StringBuffer()
-    proc.consumeProcessErrorStream(b)
-    println b.toString()
+      // def b = new StringBuffer()
+      // proc.consumeProcessErrorStream(b)
+      // println b.toString()
 
     return proc.text
+  } catch (err) {
+      println(err)
+  }
 }
 
 

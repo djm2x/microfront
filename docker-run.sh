@@ -20,7 +20,7 @@ echo $COMMIT
 
 # git log -n 2 --pretty=format:"%h" | tail -n 1
 
-git diff HEAD@{2} $COMMIT --name-only|grep .
+git diff HEAD@{1} $COMMIT --name-only | grep remote-app
 
 # git diff HEAD $COMMIT  --name-only|grep remote-app
 
