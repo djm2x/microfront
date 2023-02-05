@@ -21,7 +21,7 @@ node {
 
       sh "git --version"
 
-      def q = "git diff --name-only HEAD@{1} | grep ."
+      def q = "git diff @~ @ --name-only | grep ."
 
       sh(script: "echo ${q}", encoding: 'UTF-8')
 
