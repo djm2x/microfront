@@ -23,6 +23,8 @@ node {
 
       def q = "git diff --name-only HEAD@{1} ${lastCommit}|grep ."
 
+      sh("echo ${q}")
+
       def changes0 = sh(script: q, returnStdout: true)
       sh "echo ${changes0}"
 
