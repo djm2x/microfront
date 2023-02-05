@@ -16,33 +16,21 @@ node {
       //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
       // sh "echo ${commit.GIT_COMMIT}"
 
-      def lastCommit = sh(script: "git rev-parse HEAD", returnStdout: true)
-      sh "echo ${lastCommit}"
+      apps.each { e ->
+        def changes = sh(script:"git diff @~ @ --name-only | grep $e.name", returnStdout: true)
 
-      sh "git --version"
+        if(changes == '' || changes == null) {
+          sh """echo '$e.name no changes, no build'"""
+          return;
+        }
 
-      def q = "git diff @~ @ --name-only | grep ."
+        sh """echo '$e.name has some changes, building...'"""
 
-      sh(script: "echo ${q}", encoding: 'UTF-8')
+        // println(commit)
+        //  test git diff
 
-      // def changes0 = sh(script: q, returnStdout: true)
-      // sh "echo ${changes0}"
-
-      // apps.each { e ->
-      //   def changes = sh(script:"git diff HEAD@{1} $commit.GIT_COMMIT --name-only | grep $e.name", returnStdout: true)
-
-      //   if(changes == '' || changes == null) {
-      //     sh """echo '$e.name no changes, no build'"""
-      //     return;
-      //   }
-
-      //   sh """echo '$e.name has some changes, building...'"""
-
-      //   // println(commit)
-      //   //  test git diff
-
-      //   // println(changes)
-      // }
+        // println(changes)
+      }
     }
 
     // stage('Building image') {
