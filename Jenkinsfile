@@ -21,7 +21,7 @@ node {
 
       sh "git --version"
 
-      def changes0 = sh("git diff HEAD@{1} ${lastCommit} --name-only|grep .")
+      def changes0 = sh("git diff --name-only HEAD@{1} ${lastCommit} | grep .")
       sh "echo ${changes0}"
 
       // apps.each { e ->
