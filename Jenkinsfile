@@ -2,9 +2,9 @@
 node {
   def apps = [
     [name: "home", port: '4200', exposed_port: '6000', path: 'home', domaine: "194.163.148.222", domaine_prefix: ''],
-    [name: "product", port: '4200', exposed_port: '6001', path: 'product', domaine: "194.163.148.222", domaine_prefix: ''],
-    [name: "remote-app", port: '4200', exposed_port: '6002', path: 'remote-app', domaine: "194.163.148.222", domaine_prefix: ''],
-    [name: "shell", port: '4200', exposed_port: '6003', path: 'shell', domaine: "194.163.148.222", domaine_prefix: ''],
+    // [name: "product", port: '4200', exposed_port: '6001', path: 'product', domaine: "194.163.148.222", domaine_prefix: ''],
+    // [name: "remote-app", port: '4200', exposed_port: '6002', path: 'remote-app', domaine: "194.163.148.222", domaine_prefix: ''],
+    // [name: "shell", port: '4200', exposed_port: '6003', path: 'shell', domaine: "194.163.148.222", domaine_prefix: ''],
   ];
 
   def DOCKER_FILE_NAME = './subApi/Dockerfile'
@@ -15,6 +15,22 @@ node {
       def commit = checkout scm
       //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
       // sh "echo ${commit.GIT_COMMIT}"
+
+      try {
+      def changes0 = sh(script: """git diff --name-only HEAD@{1} ${commit.GIT_COMMIT} | grep .""", returnStdout: true)
+      sh "echo ${changes0}"
+      } catch (err) {
+          println("11111111111111111111111")
+          println(err)
+        }
+
+        try {
+      def changes0 = sh(script: """git diff --name-only HEAD@{1} | grep .""", returnStdout: true)
+      sh "echo ${changes0}"
+      } catch (err) {
+          println("33333333333333333333333333333")
+          println(err)
+        }
 
       apps.each { e ->
          try {
@@ -27,6 +43,7 @@ node {
           }
 
         } catch (err) {
+          println("2222222222222222222222")
           println(err)
         }
 
