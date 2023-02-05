@@ -21,12 +21,12 @@ node {
 
       sh "git --version"
 
-      def q = "git diff --name-only HEAD@{1} ${lastCommit}|grep ."
+      def q = "git diff --name-only HEAD@{1} ${lastCommit} | grep ."
 
       sh("echo ${q}")
 
-      def changes0 = sh(script: q, returnStdout: true)
-      sh "echo ${changes0}"
+      // def changes0 = sh(script: q, returnStdout: true)
+      // sh "echo ${changes0}"
 
       // apps.each { e ->
       //   def changes = sh(script:"git diff HEAD@{1} $commit.GIT_COMMIT --name-only | grep $e.name", returnStdout: true)
