@@ -14,15 +14,16 @@ node {
     stage('Cloning Git') {
       def commit = checkout scm
       //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
-      sh "echo ${commit}"
-    }
+      sh "echo ${commit.GIT_COMMIT}"
 
-    stage('Get project changed') {
-      def lastCommit = sh "git rev-parse HEAD"
+      def lastCommit = sh(script: "git rev-parse HEAD", returnStdout: true)
       sh "echo ${lastCommit}"
 
+      def changes0 = sh("git diff HEAD@{1} ${lastCommit} --name-only")
+      sh "echo ${changes0}"
+
       apps.each { e ->
-        def changes = sh("git diff HEAD@{1} $lastCommit --name-only | grep $e.name")
+        def changes = sh(script:"git diff HEAD@{1} $commit.GIT_COMMIT --name-only | grep $e.name", returnStdout: true)
 
         if(changes == '' || changes == null) {
           sh """echo '$e.name no changes, no build'"""
@@ -32,6 +33,8 @@ node {
         sh """echo '$e.name has some changes, building...'"""
 
         // println(commit)
+        //  test git diff
+
         // println(changes)
       }
     }
