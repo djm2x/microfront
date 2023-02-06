@@ -12,46 +12,52 @@ node {
   def app
 
     stage('Cloning Git') {
-      def commit = checkout scm
+      // def commit = checkout scm
       //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
       // sh "echo ${commit.GIT_COMMIT}"
 
+       def lastCommit = sh(script: "git rev-parse HEAD", returnStdout: true)
+      // sh "echo ${lastCommit}"
+
+      // sh "git --version"
+
       try {
-      def changes0 = sh(script: """git diff --name-only HEAD@{1} ${commit.GIT_COMMIT} | grep .""", returnStdout: true)
-      println(changes0)
+      sh  """git diff --name-only HEAD@{1} ${lastCommit} | grep ."""
+      def changes0 = sh(script: """git diff --name-only HEAD@{1} ${lastCommit} | grep .""", returnStdout: true)
+      // println(changes0)
       } catch (err) {
           println("11111111111111111111111")
           println(err)
         }
 
-        try {
-      def changes0 = sh(script: """git diff --name-only HEAD@{1} | grep .""", returnStdout: true)
-      println(changes0)
-      } catch (err) {
-          println("33333333333333333333333333333")
-          println(err)
-        }
+      //   try {
+      // def changes0 = sh(script: """git diff --name-only HEAD@{1} | grep .""", returnStdout: true)
+      // println(changes0)
+      // } catch (err) {
+      //     println("33333333333333333333333333333")
+      //     println(err)
+      //   }
 
-      apps.each { e ->
-         try {
-          def changes = sh(script:"""git diff  --name-only @~ @ | grep ${e.name}""", returnStdout: true)
+      // apps.each { e ->
+      //    try {
+      //     def changes = sh(script:"""git diff  --name-only @~ @ | grep ${e.name}""", returnStdout: true)
 
-          if(changes == '' || changes == null) {
-            println("${e.name} no changes, no build")
-          } else {
-            println("${e.name} has some changes, building...")
-          }
+      //     if(changes == '' || changes == null) {
+      //       println("${e.name} no changes, no build")
+      //     } else {
+      //       println("${e.name} has some changes, building...")
+      //     }
 
-        } catch (err) {
-          println("2222222222222222222222")
-          println(err)
-        }
+      //   } catch (err) {
+      //     println("2222222222222222222222")
+      //     println(err)
+      //   }
 
-        // println(commit)
-        //  test git diff
+      //   // println(commit)
+      //   //  test git diff
 
-        // println(changes)
-      }
+      //   // println(changes)
+      // }
     }
 
     // stage('Building image') {

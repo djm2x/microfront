@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  jenkinsfile-runner:
+    # image: jenkins/jenkinsfile-runner
+    build:
+      context: .
+      dockerfile: ./Dockerfile.jenkins-test
+    container_name: jenkinsfile-runner
+    volumes:
+      - ./:/workspace
+      - ./Jenkinsfile.test:/workspace/Jenkinsfile
+    # environment:
+    #   - JAVA_OPTS="-Xms 256m"
+
+    # command: sleep infinity
+
+# docker-compose up --build -d
+
+
+# docker run --rm -e JAVA_OPTS="-Xms 256m" -v $PWD/test:/workspace jenkins/jenkinsfile-runner
+# docker run --rm -v $(pwd)/Jenkinsfile:/workspace/Jenkinsfile jenkins/jenkinsfile-runner
