@@ -16,32 +16,29 @@ node {
       //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
       // sh "echo ${commit.GIT_COMMIT}"
 
-       def lastCommit = sh(script: "git rev-parse HEAD", returnStdout: true)
+       def lastCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true)
       // sh "echo ${lastCommit}"
 
       // sh "git --version"
 
       try {
       // sh  """#!/bin/bash git diff --name-only HEAD@{1} ${lastCommit} | grep remote-app """
-      def changes0 = sh(script: """
-          #!/bin/bash 
-          git diff  --name-only HEAD@{1} ${lastCommit}| grep remote-app
-      """, returnStdout: true)
+      def changes0 = sh(script: """git diff  --name-only HEAD@{1} ${lastCommit} | grep remote-app""", returnStdout: true)
 
-      // println(changes0)
+      println(changes0)
       } catch (err) {
           println("11111111111111111111111")
           println(err)
         }
 
-         try {
-      sh  """ git diff-tree -r --name-only HEAD ${lastCommit} origin/main"""
-      // def changes0 = sh(script: """git diff --name-only HEAD@{1} ${lastCommit} | grep . """, returnStdout: true)
-      // println(changes0)
-      } catch (err) {
-          println("2222222222222222222222")
-          println(err)
-        }
+      //    try {
+      // sh  """ git diff-tree -r --name-only HEAD ${lastCommit} origin/main"""
+      // // def changes0 = sh(script: """git diff --name-only HEAD@{1} ${lastCommit} | grep . """, returnStdout: true)
+      // // println(changes0)
+      // } catch (err) {
+      //     println("2222222222222222222222")
+      //     println(err)
+      //   }
 
       //   try {
       // def changes0 = sh(script: """git diff --name-only HEAD@{1} | grep .""", returnStdout: true)
