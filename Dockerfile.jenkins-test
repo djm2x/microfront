@@ -1,3 +1,8 @@
 FROM jenkins/jenkinsfile-runner
 
 RUN apt update && apt-get install -y git
+
+# COPY . ./workspace
+# COPY Jenkinsfile.test ./workspace/Jenkinsfile
+
+# RUN ls -al

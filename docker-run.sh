@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # find the last tagged commit and assume it was the last release
 # cd projects && git diff --name-only $COMMIT_ID | awk -F'/' 'NF!=1{print $2}' | sort -u
@@ -20,7 +20,7 @@ echo $COMMIT
 
 # git log -n 2 --pretty=format:"%h" | tail -n 1
 
-git diff --name-only 'HEAD@{1}' | grep .
+git diff --name-only 'HEAD@{1}' $COMMIT | grep .
 
 # git diff @~ @ --name-only | grep .
 

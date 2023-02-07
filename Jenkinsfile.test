@@ -22,11 +22,24 @@ node {
       // sh "git --version"
 
       try {
-      sh  """git diff --name-only HEAD@{1} ${lastCommit} | grep ."""
-      def changes0 = sh(script: """git diff --name-only HEAD@{1} ${lastCommit} | grep .""", returnStdout: true)
+      // sh  """#!/bin/bash git diff --name-only HEAD@{1} ${lastCommit} | grep remote-app """
+      def changes0 = sh(script: """
+          #!/bin/bash 
+          git diff  --name-only HEAD@{1} ${lastCommit}| grep remote-app
+      """, returnStdout: true)
+
       // println(changes0)
       } catch (err) {
           println("11111111111111111111111")
+          println(err)
+        }
+
+         try {
+      sh  """ git diff-tree -r --name-only HEAD ${lastCommit} origin/main"""
+      // def changes0 = sh(script: """git diff --name-only HEAD@{1} ${lastCommit} | grep . """, returnStdout: true)
+      // println(changes0)
+      } catch (err) {
+          println("2222222222222222222222")
           println(err)
         }
 

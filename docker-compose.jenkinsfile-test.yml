@@ -7,13 +7,18 @@ services:
       context: .
       dockerfile: ./Dockerfile.jenkins-test
     container_name: jenkinsfile-runner
+    # command: sleep infinity
+    # command: |
+    #   # echo "me & you" \
+    #   sleep infinity
+    # command: tail -f /dev/null
     volumes:
       - ./:/workspace
       - ./Jenkinsfile.test:/workspace/Jenkinsfile
     # environment:
-    #   - JAVA_OPTS="-Xms 256m"
+      # GIT_DISCOVERY_ACROSS_FILESYSTEM: true
+      # - JAVA_OPTS="-Xms 256m"
 
-    # command: sleep infinity
 
 # docker-compose up --build -d
 
