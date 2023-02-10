@@ -7,14 +7,15 @@ node {
      [name: "shell", port: '4200', exposed_port: '6003', path: 'shell', domaine: "194.163.148.222", domaine_prefix: ''],
   ];
 
-  def DOCKER_FILE_NAME = './subApi/Dockerfile'
+  // def DOCKER_FILE_NAME = './subApi/Dockerfile'
 
-  def app
+  // def app
 
     stage('Cloning Git') {
-      def commit = checkout scm
+      // def commit = checkout scm
       //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
-      // sh "echo ${commit.GIT_COMMIT}"
+      sh "ls -al"
+      sh "git diff"
 
  def lastCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true)
 

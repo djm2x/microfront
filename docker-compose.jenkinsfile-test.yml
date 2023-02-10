@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3'
 
 services:
   jenkinsfile-runner:
@@ -13,14 +13,15 @@ services:
     #   sleep infinity
     # command: tail -f /dev/null
     volumes:
-      - ./:/workspace
+      - ./:/build
+      - ./Jenkinsfile.test:/build/Jenkinsfile
       - ./Jenkinsfile.test:/workspace/Jenkinsfile
-    # environment:
-      # GIT_DISCOVERY_ACROSS_FILESYSTEM: true
+    environment:
+      GIT_DISCOVERY_ACROSS_FILESYSTEM: true
       # - JAVA_OPTS="-Xms 256m"
 
 
-# docker-compose up --build -d
+# docker-compose up --build -d --force-recreate
 
 
 # docker run --rm -e JAVA_OPTS="-Xms 256m" -v $PWD/test:/workspace jenkins/jenkinsfile-runner

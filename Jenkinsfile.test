@@ -1,9 +1,9 @@
 #!groovy
 node {
   def apps = [
-    [name: "home", port: '4200', exposed_port: '6000', path: 'home', domaine: "194.163.148.222", domaine_prefix: ''],
+    [name: "remote-app", port: '4200', exposed_port: '6002', path: 'remote-app', domaine: "194.163.148.222", domaine_prefix: ''],
+    // [name: "home", port: '4200', exposed_port: '6000', path: 'home', domaine: "194.163.148.222", domaine_prefix: ''],
     // [name: "product", port: '4200', exposed_port: '6001', path: 'product', domaine: "194.163.148.222", domaine_prefix: ''],
-    // [name: "remote-app", port: '4200', exposed_port: '6002', path: 'remote-app', domaine: "194.163.148.222", domaine_prefix: ''],
     // [name: "shell", port: '4200', exposed_port: '6003', path: 'shell', domaine: "194.163.148.222", domaine_prefix: ''],
   ];
 
@@ -11,99 +11,42 @@ node {
 
   def app
 
-    stage('Cloning Git') {
-      // def commit = checkout scm
-      //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
-      // sh "echo ${commit.GIT_COMMIT}"
+  stage('Cloning Git') {
+    // def commit = checkout scm
+    //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
+    // sh "echo ${commit.GIT_COMMIT}"
 
-       def lastCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true)
-      // sh "echo ${lastCommit}"
+    sh "pwd"
+    // sh "ls -al"
+    // sh "echo ${lastCommit}"
 
-      // sh "git --version"
 
+    // sh "git --version"
+
+    //  def lastCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true)
+
+    def lastCommit = sh(script: "git rev-parse HEAD", returnStdout: true)
+
+    // sh "echo $lastCommit"
+      def oldCommit = '67caa105b3b286ff221a06d386ef2fb1498cd00f'
+    // sh "echo $oldCommit"
+
+    apps.each { e ->
       try {
-      // sh  """#!/bin/bash git diff --name-only HEAD@{1} ${lastCommit} | grep remote-app """
-      def changes0 = sh(script: """git diff  --name-only HEAD@{1} ${lastCommit} | grep remote-app""", returnStdout: true)
+        // sh  """#!/bin/bash git diff --name-only HEAD@{1} ${lastCommit} | grep remote-app """
+        // def changes0 = sh(script: """git diff  --name-only 'HEAD@{1}' ${lastCommit}""", returnStdout: true)
+        def changes0 = sh(script: "git diff HEAD@{2} "  + oldCommit + " --name-only", returnStdout: true)
 
-      println(changes0)
+        sh "echo $changes0"
+
+        println("++++++++++++++++++> ${e.name} has some changes, building...")
+
+        // println(changes0 + "----------")
       } catch (err) {
-          println("11111111111111111111111")
-          println(err)
-        }
-
-      //    try {
-      // sh  """ git diff-tree -r --name-only HEAD ${lastCommit} origin/main"""
-      // // def changes0 = sh(script: """git diff --name-only HEAD@{1} ${lastCommit} | grep . """, returnStdout: true)
-      // // println(changes0)
-      // } catch (err) {
-      //     println("2222222222222222222222")
-      //     println(err)
-      //   }
-
-      //   try {
-      // def changes0 = sh(script: """git diff --name-only HEAD@{1} | grep .""", returnStdout: true)
-      // println(changes0)
-      // } catch (err) {
-      //     println("33333333333333333333333333333")
-      //     println(err)
-      //   }
-
-      // apps.each { e ->
-      //    try {
-      //     def changes = sh(script:"""git diff  --name-only @~ @ | grep ${e.name}""", returnStdout: true)
-
-      //     if(changes == '' || changes == null) {
-      //       println("${e.name} no changes, no build")
-      //     } else {
-      //       println("${e.name} has some changes, building...")
-      //     }
-
-      //   } catch (err) {
-      //     println("2222222222222222222222")
-      //     println(err)
-      //   }
-
-      //   // println(commit)
-      //   //  test git diff
-
-      //   // println(changes)
-      // }
+        println("------------------>${e.name} no changes, no build")
+        println(err)
+      }
     }
-
-    // stage('Building image') {
-    //   app = docker.build("${APP_NAME}", " -f ${DOCKER_FILE_NAME} ./")
-    //   sh """docker build -t sa-cms-dev-api -f ./cmsApi/Dockerfile ./"""
-    //   // sh "echo ${app}"
-    // }
-
-    // stage('Docker Run') {
-    //   sh "docker rm --force ${APP_NAME}"
-    //   // sh "docker rmi --force ${APP_NAME}"
-    //   //&& PathPrefix(`/${DOMAINE_PREFIX}`)
-    //   // -p ${EXPOSED_PORT}:${APP_PORT} \
-    //   sh """docker run -d \
-    //   --restart unless-stopped \
-    //   --network proxy \
-    //   --env "me=you" \
-    //   --volume /home/ubuntu/volumes/${APP_NAME}/wwwroot:/app/wwwroot \
-    //   --label traefik.enable=true \
-    //   --label traefik.http.routers.${APP_NAME}.tls=true \
-    //   --label traefik.http.routers.${APP_NAME}.tls.certresolver=letsencrypt \
-    //   --label traefik.http.routers.${APP_NAME}.rule='Host(`${SUB_DOMAINE}.${DOMAINE}`) && PathPrefix(`/${DOMAINE_PREFIX}`)'\
-    //   --label traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT} \
-    //   --name ${APP_NAME} \
-    //   ${APP_NAME}"""
-
-    //   sh "docker rm --force sa-cms-dev-api"
-
-    //   sh """docker run -d \
-    //   --restart unless-stopped \
-    //   -p 6001:5001 \
-    //   --volume /home/ubuntu/volumes/sa-cms-dev-api/wwwroot:/app/wwwroot \
-    //   --name sa-cms-dev-api \
-    //   sa-cms-dev-api"""
-
-    //   // sh "docker system prune -a -f"
-    // }
+  }
 }
 
