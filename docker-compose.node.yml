@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  node-test:
+    # image: node:16-alpine3.15
+    build:
+      context: .
+      dockerfile: ./Dockerfile.node
+    container_name: node-test
+    command:
+      # - "/bin/sh 'apk add --no-cache git'"
+      - sleep infinity
+
+# docker-compose -f docker-compose.node.yml up --build -d
+
+# docker run --name apk-builder_bash --rm -i -t android_apk-builder bash
+
+# docker system prune -a -f

@@ -13,9 +13,7 @@
 # git diff --name-only HEAD
 # git log -n 2 --pretty=format:"%h" | tail -n 1
 # git diff --name-only 'HEAD@{1}' $COMMIT | grep .
-git diff --name-only 'HEAD@{1}' 67caa105b3b286ff221a06d386ef2fb1498cd00f | grep .
-
-git diff --name-only 'HEAD^' 67caa105b3b286ff221a06d386ef2fb1498cd00f
+git diff --name-only HEAD@{1} 48a1af456fa45dfa0c4b479df4befdf7422f1793 | grep remote-app
 # git diff @~ @ --name-only | grep .
 # git diff HEAD $COMMIT  --name-only|grep remote-app
 # CHANGED=$(git diff --name-only HEAD $COMMIT $PATH_TO_LIB)

@@ -1,0 +1,12 @@
+FROM node:16-alpine3.15 as build-env
+
+# install git
+RUN apk add --no-cache git
+
+WORKDIR /app
+
+COPY . .
+
+RUN ls -al
+
+# RUN git diff --name-only HEAD@{1} 48a1af456fa45dfa0c4b479df4befdf7422f1793 | grep remote-app

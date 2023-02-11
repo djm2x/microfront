@@ -28,25 +28,39 @@ node {
     def lastCommit = sh(script: "git rev-parse HEAD", returnStdout: true)
 
     // sh "echo $lastCommit"
-      def oldCommit = '67caa105b3b286ff221a06d386ef2fb1498cd00f'
+      def oldCommit = '48a1af456fa45dfa0c4b479df4befdf7422f1793'
     // sh "echo $oldCommit"
 
     apps.each { e ->
-      try {
-        // sh  """#!/bin/bash git diff --name-only HEAD@{1} ${lastCommit} | grep remote-app """
-        // def changes0 = sh(script: """git diff  --name-only 'HEAD@{1}' ${lastCommit}""", returnStdout: true)
-        def changes0 = sh(script: "git diff HEAD@{2} "  + oldCommit + " --name-only", returnStdout: true)
+        def changes = sh(script: "git diff HEAD^ HEAD -- ${e.name}", returnStdout: true).trim()
 
-        sh "echo $changes0"
-
-        println("++++++++++++++++++> ${e.name} has some changes, building...")
-
-        // println(changes0 + "----------")
-      } catch (err) {
-        println("------------------>${e.name} no changes, no build")
-        println(err)
-      }
+        if (!changes) {
+          echo 'No changes in the folder.'
+        } else {
+          echo 'Changes found in the folder:'
+          echo "${changes}"
+        }
     }
+
+    // apps.each { e ->
+    //   try {
+    //     def q = "git diff --name-only HEAD@{1} "  + '48a1af456fa45dfa0c4b479df4befdf7422f1793' + " | grep " + e.name;
+
+    //     println("***********************> ${q}")
+    //     // sh  """#!/bin/bash git diff --name-only HEAD@{1} ${lastCommit} | grep remote-app """
+    //     // def changes0 = sh(script: """git diff  --name-only 'HEAD@{1}' ${lastCommit}""", returnStdout: true)
+    //     def changes0 = sh(script: q, returnStdout: true)
+
+    //     // sh "echo $changes0"
+
+    //     println("++++++++++++++++++> ${e.name} has some changes, building...")
+
+    //     // println(changes0 + "----------")
+    //   } catch (err) {
+    //     println("------------------>${e.name} no changes, no build")
+    //     println(err)
+    //   }
+    // }
   }
 }
 
