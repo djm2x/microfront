@@ -20,7 +20,6 @@ node {
     // sh "ls -al"
     // sh "echo ${lastCommit}"
 
-
     // sh "git --version"
 
     //  def lastCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true)
