@@ -2,9 +2,9 @@
 node {
   def apps = [
     [name: "remote-app", port: '4200', exposed_port: '6002', path: 'remote-app', domaine: "194.163.148.222", domaine_prefix: ''],
-    // [name: "home", port: '4200', exposed_port: '6000', path: 'home', domaine: "194.163.148.222", domaine_prefix: ''],
-    // [name: "product", port: '4200', exposed_port: '6001', path: 'product', domaine: "194.163.148.222", domaine_prefix: ''],
-    // [name: "shell", port: '4200', exposed_port: '6003', path: 'shell', domaine: "194.163.148.222", domaine_prefix: ''],
+    [name: "home", port: '4200', exposed_port: '6000', path: 'home', domaine: "194.163.148.222", domaine_prefix: ''],
+    [name: "product", port: '4200', exposed_port: '6001', path: 'product', domaine: "194.163.148.222", domaine_prefix: ''],
+    [name: "shell", port: '4200', exposed_port: '6003', path: 'shell', domaine: "194.163.148.222", domaine_prefix: ''],
   ];
 
   def DOCKER_FILE_NAME = './subApi/Dockerfile'
@@ -16,7 +16,7 @@ node {
     //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
     // sh "echo ${commit.GIT_COMMIT}"
 
-    sh "pwd"
+    // sh "pwd"
     // sh "ls -al"
     // sh "echo ${lastCommit}"
 
@@ -24,48 +24,41 @@ node {
 
     //  def lastCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true)
 
-    def lastCommit = sh(script: "git rev-parse HEAD", returnStdout: true)
+    def currentCommit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+    def lastCommit = getLastSuccessfulCommit()
 
-    // sh "echo $lastCommit"
-      def oldCommit = '48a1af456fa45dfa0c4b479df4befdf7422f1793'
+    def command = "git diff-tree -r --name-only ${currentCommit} ${lastCommit}"
 
-              def  GIT_COMMIT_REV = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
-        println("***********************> ${changes}")
+    // def changes0 = sh(script: command, returnStdout: true).trim()
 
-    // sh "echo $oldCommit"
+    // println("+}}}}}}}}++> ${changes0}")
 
     apps.each { e ->
-        def changes = sh(script: "git diff HEAD^ HEAD -- projects/${e.name}", returnStdout: true).trim()
 
+      if(!lastCommit) {
+        echo "First commit building ${e.name} ..."
+        return
+      }
 
-println("***********************> ${changes}")
-        if (!changes) {
-          echo 'No changes in the folder.'
-        } else {
-          echo 'Changes found in the folder:'
-          echo "${changes}"
-        }
+      def changes = sh(script: "${command} -- projects/${e.name}", returnStdout: true).trim()
+
+      println("***********************> ${changes}")
+
+      if (!changes) {
+        echo "No changes in the folder ${e.name}."
+        return
+      }
+
+      echo "Changes found in the folder ${e.name}:"
+      echo "${changes}"
     }
-
-    // apps.each { e ->
-    //   try {
-    //     def q = "git diff --name-only HEAD@{1} "  + '48a1af456fa45dfa0c4b479df4befdf7422f1793' + " | grep " + e.name;
-
-    //     println("***********************> ${q}")
-    //     // sh  """#!/bin/bash git diff --name-only HEAD@{1} ${lastCommit} | grep remote-app """
-    //     // def changes0 = sh(script: """git diff  --name-only 'HEAD@{1}' ${lastCommit}""", returnStdout: true)
-    //     def changes0 = sh(script: q, returnStdout: true)
-
-    //     // sh "echo $changes0"
-
-    //     println("++++++++++++++++++> ${e.name} has some changes, building...")
-
-    //     // println(changes0 + "----------")
-    //   } catch (err) {
-    //     println("------------------>${e.name} no changes, no build")
-    //     println(err)
-    //   }
-    // }
   }
 }
 
+def getLastSuccessfulCommit() {
+  try {
+    return GIT_PREVIOUS_SUCCESSFUL_COMMIT;
+  } catch(err) {
+    return null;
+  }
+}

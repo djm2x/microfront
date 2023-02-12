@@ -17,7 +17,10 @@ node {
       sh "ls -al"
       sh "git diff"
 
- def lastCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true)
+      def changes = sh(script: "git diff-tree -r --name-only <commit1> <commit2>", returnStdout: true).trim()
+
+
+      def lastCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true)
 
       apps.each { e ->
          try {
