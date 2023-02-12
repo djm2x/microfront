@@ -29,11 +29,17 @@ node {
 
     // sh "echo $lastCommit"
       def oldCommit = '48a1af456fa45dfa0c4b479df4befdf7422f1793'
+
+              def  GIT_COMMIT_REV = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+        println("***********************> ${changes}")
+
     // sh "echo $oldCommit"
 
     apps.each { e ->
-        def changes = sh(script: "git diff HEAD^ HEAD -- ${e.name}", returnStdout: true).trim()
+        def changes = sh(script: "git diff HEAD^ HEAD -- projects/${e.name}", returnStdout: true).trim()
 
+
+println("***********************> ${changes}")
         if (!changes) {
           echo 'No changes in the folder.'
         } else {
