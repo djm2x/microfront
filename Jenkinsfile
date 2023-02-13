@@ -14,8 +14,8 @@ node {
   stage('Cloning Git') {
     def commit = checkout scm
     //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
-    sh "echo ${commit}"
-    sh "echo ${commit.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
+    // sh "echo ${commit}"
+    // sh "echo ${commit.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
 
     // sh "pwd"
     // sh "ls -al"
