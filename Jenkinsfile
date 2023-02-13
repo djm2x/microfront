@@ -29,7 +29,7 @@ node {
 
     script{
       try{
-        lastCommit = GIT_PREVIOUS_SUCCESSFUL_COMMIT
+        lastCommit = !(env.GIT_PREVIOUS_SUCCESSFUL_COMMIT) ? 'HEAD^' : env.GIT_PREVIOUS_SUCCESSFUL_COMMIT
       }catch(Exception e)
       {
         lastCommit = "HEAD^"
