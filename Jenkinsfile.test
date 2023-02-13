@@ -67,28 +67,28 @@ node {
   }
 }
 
+def getLastSuccessfulCommit() {
+  try {
+    return System.getenv('GIT_PREVIOUS_SUCCESSFUL_COMMIT');
+  } catch(err) {
+    return "HEAD^^^";
+  }
+}
+
 // def getLastSuccessfulCommit() {
-//   try {
-//     return System.getenv('GIT_PREVIOUS_SUCCESSFUL_COMMIT');
-//   } catch(err) {
-//     return "HEAD^";
+//   def lastSuccessfulHash = null
+//   def lastSuccessfulBuild = currentBuild.rawBuild.getPreviousSuccessfulBuild()
+//   if ( lastSuccessfulBuild ) {
+//     lastSuccessfulHash = commitHashForBuild( lastSuccessfulBuild )
 //   }
+//   return lastSuccessfulHash
 // }
 
-def getLastSuccessfulCommit() {
-  def lastSuccessfulHash = null
-  def lastSuccessfulBuild = currentBuild.rawBuild.getPreviousSuccessfulBuild()
-  if ( lastSuccessfulBuild ) {
-    lastSuccessfulHash = commitHashForBuild( lastSuccessfulBuild )
-  }
-  return lastSuccessfulHash
-}
-
-/**
- * Gets the commit hash from a Jenkins build object, if any
- */
-@NonCPS
-def commitHashForBuild( build ) {
-  def scmAction = build?.actions.find { action -> action instanceof jenkins.scm.api.SCMRevisionAction }
-  return scmAction?.revision?.hash
-}
+// /**
+//  * Gets the commit hash from a Jenkins build object, if any
+//  */
+// @NonCPS
+// def commitHashForBuild( build ) {
+//   def scmAction = build?.actions.find { action -> action instanceof jenkins.scm.api.SCMRevisionAction }
+//   return scmAction?.revision?.hash
+// }
