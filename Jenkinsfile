@@ -29,7 +29,7 @@ node {
 
     script{
       try{
-        lastCommit = System.getenv('GIT_PREVIOUS_SUCCESSFUL_COMMIT')
+        lastCommit = GIT_PREVIOUS_SUCCESSFUL_COMMIT
       }catch(Exception e)
       {
         lastCommit = "HEAD^"
