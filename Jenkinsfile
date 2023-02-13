@@ -29,9 +29,9 @@ node {
 
     def command = "git diff-tree -r --name-only ${currentCommit} ${lastCommit}"
 
-    // def changes0 = sh(script: command, returnStdout: true).trim()
+    def changes0 = sh(script: command, returnStdout: true).trim()
 
-    // println("+}}}}}}}}++> ${changes0}")
+    println("----------------------------------> ${changes0}")
 
     apps.each { e ->
 
