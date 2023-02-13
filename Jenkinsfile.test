@@ -27,6 +27,8 @@ node {
     def lastCommit = null
     // def lastCommit = getLastSuccessfulCommit()
 
+    println(env)
+
     script{
       try{
         lastCommit = !(env.GIT_PREVIOUS_SUCCESSFUL_COMMIT) ? 'HEAD^' : env.GIT_PREVIOUS_SUCCESSFUL_COMMIT
