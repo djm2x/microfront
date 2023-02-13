@@ -12,7 +12,7 @@ node {
   def app
 
   stage('Cloning Git') {
-    // def commit = checkout scm
+    def commit = checkout scm
     //  env.BRANCH_NAME = commit.GIT_BRANCH.replace('origin/', '')
     // sh "echo ${commit.GIT_COMMIT}"
 
@@ -24,7 +24,7 @@ node {
 
     //  def lastCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true)
 
-    def currentCommit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+    def currentCommit = commit.GIT_COMMIT // sh(script: "git rev-parse HEAD", returnStdout: true).trim()
     def lastCommit = getLastSuccessfulCommit()
 
     def command = "git diff-tree -r --name-only ${currentCommit} ${lastCommit}"
