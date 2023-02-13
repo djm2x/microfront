@@ -23,9 +23,19 @@ node {
     // sh "git --version"
 
     //  def lastCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true)
-
     def currentCommit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-    def lastCommit = getLastSuccessfulCommit()
+    def lastCommit = null
+    // def lastCommit = getLastSuccessfulCommit()
+
+    script{
+      try{
+        lastCommit = System.getenv('GIT_PREVIOUS_SUCCESSFUL_COMMIT')
+      }catch(Exception e)
+      {
+        lastCommit = "HEAD^"
+      }
+    }
+
 
     def command = "git diff-tree -r --name-only ${currentCommit} ${lastCommit}"
 
@@ -55,10 +65,10 @@ node {
   }
 }
 
-def getLastSuccessfulCommit() {
-  try {
-    return GIT_PREVIOUS_SUCCESSFUL_COMMIT;
-  } catch(err) {
-    return null;
-  }
-}
+// def getLastSuccessfulCommit() {
+//   try {
+//     return System.getenv('GIT_PREVIOUS_SUCCESSFUL_COMMIT');
+//   } catch(err) {
+//     return "HEAD^";
+//   }
+// }
