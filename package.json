@@ -12,6 +12,7 @@
     "b2": "bash docker-run.sh",
     "b": "docker-compose -f docker-compose.jenkinsfile-test.yml up --build",
     "g": "groovy main.groovy",
+    "all-extensions": "code --list-extensions",
     "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
   },
   "private": true,
