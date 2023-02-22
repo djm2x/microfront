@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  test-env-var:
+    container_name: test-env-var
+    # image: nginx:alpine
+    build:
+      context: ..
+      dockerfile: test-env-var/Dockerfile
+    # volumes:
+      # - ../dist:/usr/share/nginx/html
+      # - ../ngx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 4200:4200
+    environment:
+      - SUB_API=https://sa-dev-api-sub.digitransform.co
+    networks:
+      - proxy
+    # command: /bin/sh -c "while sleep 1000; do :; done"
+    # command: sed -i 's/origin text/new text/g' /etc/sysctl.conf && /bin/sh -c "sleep 2 && exec nginx -g 'daemon off;'"
+
+
+networks:
+  proxy:
+    external: true
+
+
+# docker-compose up --build -d --force-recreate
+
+# docker logs node-stream-test
+
+# docker exec -it node-stream-test sh 
